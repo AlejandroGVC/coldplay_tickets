@@ -97,7 +97,7 @@ def viagogo(grupo, ciudad, dia):
     return data.to_csv(index = False, path_or_buf = 'data/viagogo.csv', mode = 'a', header = False) 
 
 if __name__=='__main__':
-    #viagogo(grupo=grupo, ciudad=ciudad, dia=dia)
+    viagogo(grupo=grupo, ciudad=ciudad, dia=dia)
     milanuncios(grupo=grupo, ciudad=ciudad, dia=dia, sitios=sitios)
   
 
