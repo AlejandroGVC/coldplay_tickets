@@ -31,9 +31,9 @@ def milanuncios(grupo, ciudad, dia, sitios):
     anuncios = get_html(url).find_all('div', {'class':'ma-AdCard-detail'})
     ls_titulos, ls_precios, ls_descrip  = [], [], []
     for anuncio in anuncios:
-        ls_titulos.append(anuncio.find('h2').get_text())
-        ls_precios.append(anuncio.find('span', {'class':'ma-AdPrice-value'}).get_text())
-        ls_descrip.append(anuncio.find('p', {'class':'ma-AdCardDescription-text'}).get_text())
+        ls_titulos.append(anuncio.find('h2').text)
+        ls_precios.append(anuncio.find('div', {'class':'ma-AdMultiplePrice'}).text)
+        ls_descrip.append(anuncio.find('p', {'class':'ma-AdCardDescription-text'}).text)
     dictionary = {'titulo':ls_titulos, 
                   'descripcion':ls_descrip, 
                   'precio':ls_precios,
@@ -97,5 +97,7 @@ def viagogo(grupo, ciudad, dia):
     return data.to_csv(index = False, path_or_buf = 'data/viagogo.csv', mode = 'a', header = False) 
 
 if __name__=='__main__':
-    viagogo(grupo=grupo, ciudad=ciudad, dia=dia)
+    #viagogo(grupo=grupo, ciudad=ciudad, dia=dia)
     milanuncios(grupo=grupo, ciudad=ciudad, dia=dia, sitios=sitios)
+  
+
