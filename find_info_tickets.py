@@ -43,7 +43,7 @@ def milanuncios(grupo, ciudad, dia, sitios):
     for i in range(0, n):
         if 'coldplay' not in data.loc[i,'titulo'].lower():
             data.drop(i, inplace = True)
-    return data.to_csv(index = False, path_or_buf = 'data/milanuncios.csv', mode = 'a', header = False) 
+    return data.to_csv(index = False, path_or_buf = 'project/data/milanuncios.csv', mode = 'a', header = False) 
 
 def viagogo(grupo, ciudad, dia):
     '''
@@ -52,7 +52,7 @@ def viagogo(grupo, ciudad, dia):
     devuelve un csv
     '''
     #selenium
-    driver = webdriver.Safari()
+    driver = webdriver.Chrome()
     driver.get('https://www.viagogo.es')
     search = driver.find_element_by_xpath('//*[@id="search"]')
     separator = ' '
@@ -94,7 +94,7 @@ def viagogo(grupo, ciudad, dia):
                   'seccion':ls_seccion,
                   'dia':ls_dia} 
     data = pd.DataFrame.from_dict(dictionary)
-    return data.to_csv(index = False, path_or_buf = 'data/viagogo.csv', mode = 'a', header = False) 
+    return data.to_csv(index = False, path_or_buf = 'project/data/viagogo.csv', mode = 'a', header = False) 
 
 if __name__=='__main__':
     viagogo(grupo=grupo, ciudad=ciudad, dia=dia)
