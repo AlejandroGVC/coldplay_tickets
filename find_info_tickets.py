@@ -10,19 +10,23 @@ from datetime import date
 
 class find_info:
 
-    def __init__(self, grupo, ciudad, dia, sitios):
+    def __init__(self, 
+                 grupo = 'coldplay',
+                 ciudad = 'paris', 
+                 dia = '17', 
+                 sitios = 'pista'):
         self.grupo = grupo
         self.ciudad = ciudad
         self.dia = dia
         self.sitios = sitios
 
-    def milanuncios(self):
+    def milanuncios(self, path = './data/milanuncios.csv'):
         '''
         Extrae de la pagina de mil anuncios informacion
         de un concierto en una ciudad y dia concretos y 
         devuelve un csv
         '''
-        url = 'https://www.milanuncios.com/entradas-de-concierto/?s='+ str(self.grupo) + '%20' + str(self.ciudad) + '%20' + str(self.dia) + '%20' + str(self.sitios)
+        url = f'https://www.milanuncios.com/entradas-de-concierto/?s={str(self.grupo)}%20{str(self.ciudad)}%20{str(self.dia)}%20{str(self.sitios)}'
         page = requests.get(url)
         html = BeautifulSoup(page.content, 'html.parser')
         anuncios = html.find_all('div', {'class':'ma-AdCard-detail'})
@@ -40,9 +44,9 @@ class find_info:
         for i in range(0, n):
             if 'coldplay' not in data.loc[i,'titulo'].lower():
                 data.drop(i, inplace = True)
-        return data.to_csv(index = False, path_or_buf = './data/milanuncios.csv', mode = 'a', header = False) 
+        return data.to_csv(index = False, path_or_buf = path, mode = 'a', header = False) 
 
-    def viagogo(self):
+    def viagogo(self, path = './data/viagogo.csv'):
         '''
         Extrae de la pagina de viagogo informacion
         de un concierto en una ciudad y dia concretos y 
@@ -91,17 +95,11 @@ class find_info:
                       'seccion':ls_seccion,
                       'dia':ls_dia} 
         data = pd.DataFrame.from_dict(dictionary)
-        return data.to_csv(index = False, path_or_buf = './data/viagogo.csv', mode = 'a', header = False) 
+        return data.to_csv(index = False, path_or_buf = path, mode = 'a', header = False) 
 
 if __name__=='__main__':
-    buscador = find_info(
-            grupo = 'coldplay',
-            ciudad = 'paris',
-            dia = 17,
-            sitios = 'pista'
-        )
-    buscador.milanuncios()
-    buscador.viagogo()
+    find_info().milanuncios()
+    find_info().viagogo()
 
 
 
